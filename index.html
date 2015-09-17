@@ -14,14 +14,19 @@
     <h4>Enter Your User Name</h4>
       <form id="new_player">
         <label for="player"></label>
-        <input type="text" name="player_name" placeholder="username">
-        <select name="x_or_o">
+        <input type="text" id="player_name" name="player_name" placeholder="Player Name">
+        <select name="x_or_o" id='x_or_o'>
           <option value="nil">Choose </option>
           <option value="O">O</option>
           <option value="X">X</option>
         </select>
+        <button type='submit'>Submit</button>
       </form>
+      <p>
+        <ul id="players">
 
+        </ul>
+      </p>
       <!-- table stuff -->
       <table class="center-table" id="tic_tac_toe_grid">
         <tr>
