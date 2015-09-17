@@ -29,3 +29,7 @@ td {
 li {
   margin-right: 25px;
 }
+
+.fa-times {
+  color: red;
+}
