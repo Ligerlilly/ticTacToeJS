@@ -6,3 +6,16 @@
 .negative {
   background-color: red !important;
 }
+
+.center-table
+{
+  margin: 0 auto !important;
+  float: 3em !important;
+}
+.table, tr, td{
+  border:5px solid;
+  padding-right: 10rem;
+  padding-top: 10rem;
+  /*text-align:center;*/
+
+}
