@@ -39,9 +39,9 @@ Board.prototype.find = function(x, y) {
   }
 };
 
-function Game() {
-  var playerX = new Player('John','X');
-  var playerO = new Player('Steve','O');
+function Game(playerX, playerO) {
+  var playerX = playerX;
+  var playerO = playerO;
   var board = new Board();
   var turn = 1;
   var whoTurn = function() {
@@ -120,24 +120,66 @@ function Game() {
 }
 
 $(document).ready(function(){
+  $('table').hide();
+  $('#new').hide();
+  $('#info').hide();
+  $('#new').click(function() {
+      game = new Game(playerX, playerO);
+      location.reload();
+    });
+
+  var playerX = {};
+  var playerO = {};
+
+
 
   $('form#new_player').submit(function(event) {
     event.preventDefault();
     var inputtedPlayerName = $("input#player_name").val();
     var selectedChoose = $(this).find("#x_or_o").val();
-    
+
+
     if (selectedChoose === 'X'){
       $("#playerX").remove();
-      var playerX = new Player(inputtedPlayerName, selectedChoose);
-      $("ul#players").append("<li id='playerX'><span class='players'>" + playerX.name + " is playing with " + selectedChoose + "</span></li>");
+      playerX = new Player(inputtedPlayerName, selectedChoose);
+      $("ul#players").append("<li id='playerX'><i class='fa-li fa fa-user'></i><span class='players'>" + playerX.name + " is playing with " + selectedChoose + "</span></li>");
 
     } else if (selectedChoose === 'O') {
       $("#playerO").remove();
-      var playerO = new Player(inputtedPlayerName, selectedChoose);
-      $("ul#players").append("<li id='playerO'><span class='players'>" + playerO.name + " is playing with " + selectedChoose + "</span></li>");
+      playerO = new Player(inputtedPlayerName, selectedChoose);
+      $("ul#players").append("<li id='playerO'><i class='fa-li fa fa-user'></i><span class='players'>" + playerO.name + " is playing with " + selectedChoose + "</span></li>");
     }
 
 
+
+    if ((playerX.mark == 'X') && (playerO.mark == 'O')){
+      $("li").first().append(" <span><b>VS.</b></span>");
+      $('#new_player').hide('slow');
+      $('table').show('slow');
+      $('.player').text(playerX.name);
+      $('#info').show();
+      var game = new Game(playerX, playerO);
+      for (var i = 0; i < 9; i++){
+
+        $('#' + i).click(function() {
+
+          if (!game.board.spaces[parseInt($(this).attr('id'))].clicked){
+            var player = game.board.spaces[parseInt($(this).attr('id'))].markedBy(game.whoTurn());
+            if (player.mark === "X") {
+              $(this).append("<i class='fa fa-times fa-5x'></i>");
+            }
+            else {
+              $(this).append("<i class='fa fa-circle-o fa-5x'></i>");
+            }
+
+            game.board.spaces[parseInt($(this).attr('id'))].clicked = true;
+            game.turnToggle();
+            $('.player').text(game.whoTurn().name);
+            game.winning();
+          }
+       });
+      }
+    }
 
   });
 });

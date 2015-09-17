@@ -14,8 +14,18 @@
 }
 .table, tr, td{
   border:5px solid;
-  padding-right: 10rem;
-  padding-top: 10rem;
-  /*text-align:center;*/
+  /*padding-right: 5rem;
+  padding-top: 5rem;*/
 
+  text-align:center;
+
+}
+
+td {
+  height: 10em;
+  width: 10em;
+}
+
+li {
+  margin-right: 25px;
 }
