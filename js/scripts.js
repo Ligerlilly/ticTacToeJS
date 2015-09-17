@@ -40,6 +40,7 @@ Board.prototype.find = function(x, y) {
 };
 
 function Game(playerX, playerO) {
+  var count = 0;
   var playerX = playerX;
   var playerO = playerO;
   var board = new Board();
@@ -116,13 +117,15 @@ function Game(playerX, playerO) {
             board   : board,
             whoTurn : whoTurn,
             turnToggle : turnToggle,
-            winning : winning }
+            winning : winning,
+            count : count}
 }
 
 $(document).ready(function(){
   $('table').hide();
   $('#new').hide();
   $('#info').hide();
+  $('#cats').hide();
   $('#new').click(function() {
       game = new Game(playerX, playerO);
       location.reload();
@@ -162,6 +165,14 @@ $(document).ready(function(){
       for (var i = 0; i < 9; i++){
 
         $('#' + i).click(function() {
+          game.count += 1;
+          if (game.count === 9) {
+            $('table').hide('slow');
+            $('#cats').show('slow');
+            $('#info').hide();
+            $('#new_player').show();
+            $('#new').show('slow');
+          }
 
           if (!game.board.spaces[parseInt($(this).attr('id'))].clicked){
             var player = game.board.spaces[parseInt($(this).attr('id'))].markedBy(game.whoTurn());
@@ -183,28 +194,3 @@ $(document).ready(function(){
 
   });
 });
-// function Game(player1, player2, board) {
-//   this.turn = 1                                           // initialize at turn 1
-//   this.player1 = player1;                                 // passing player 1 into Game
-//   this.player2 = player2;                                 // same...
-//   this.board = board;                                     // same....
-//   var winCond  = [ [["0","0"], ["0","1"], ["0","2"]] ];   //not finished
-//   var player1MoveHist = [];                               // self explan..
-//   var player2MoveHist = [];                               // self explan..
-// }
-//
-// Game.prototype.checkMark = function() {
-//   if (turn % 2 !== 0) {                             //logic is that even (meaning 1), would start player 1 at turn 1
-//     player1.mark                                    // I don't know how this works yet
-//     for (var i = 0; i > board.length; i++) {        // looping through for the length of the array of coords
-//       if (player1.mark === board[i]) {              // if player1.mark coordnates match an array at i index...
-//         player1MoveHist.push(board[i]);             // push the board coordnates at i index to moveHist before...
-//         board[i] = player1.mark;                    // overwriting board at i index with the player marker("X")
-//       } else {                                      // else...
-//         if (board[i] === "X" | "O") {               // if board at i index already has a letter...
-//           return invalid                            // invald move
-//         }
-//       }
-//     }
-//   }
-// }
